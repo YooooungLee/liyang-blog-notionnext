@@ -81,7 +81,11 @@ const MyApp = ({ Component, pageProps }) => {
     [theme]
   )
 
-  const enableClerk = process.env.NEXT_PUBLIC_CLERK_PUBLISHABLE_KEY
+  // Do not mount Clerk unless a valid publishable key is configured. This keeps
+  // authentication optional for ordinary public NotionNext blogs.
+  const clerkPublishableKey = process.env.NEXT_PUBLIC_CLERK_PUBLISHABLE_KEY
+  const enableClerk =
+    typeof clerkPublishableKey === 'string' && clerkPublishableKey.startsWith('pk_')
   const content = (
     <AppErrorBoundary>
       <GlobalContextProvider {...pageProps}>
