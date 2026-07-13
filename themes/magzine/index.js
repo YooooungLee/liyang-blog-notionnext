@@ -543,7 +543,7 @@ const LayoutTagIndex = props => {
  */
 const LayoutSignIn = props => {
   const { post } = props
-  const enableClerk = process.env.NEXT_PUBLIC_CLERK_PUBLISHABLE_KEY?.startsWith('pk_')
+  const enableClerk = false
 
   return (
     <>
@@ -569,7 +569,7 @@ const LayoutSignIn = props => {
  */
 const LayoutSignUp = props => {
   const { post } = props
-  const enableClerk = process.env.NEXT_PUBLIC_CLERK_PUBLISHABLE_KEY?.startsWith('pk_')
+  const enableClerk = false
 
   return (
     <>

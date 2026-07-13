@@ -18,12 +18,6 @@ import ErrorHandler from '@/lib/utils/errorHandler'
 import BLOG from '@/blog.config'
 import ExternalPlugins from '@/components/ExternalPlugins'
 import SEO from '@/components/SEO'
-import { zhCN } from '@clerk/localizations'
-import dynamic from 'next/dynamic'
-// import { ClerkProvider } from '@clerk/nextjs'
-const ClerkProvider = dynamic(() =>
-  import('@clerk/nextjs').then(m => m.ClerkProvider)
-)
 const AppErrorBoundary = ErrorHandler.createErrorBoundary(
   <div style={{ padding: '2rem', textAlign: 'center', minHeight: '100vh', display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center' }}>
     <h1 style={{ fontSize: '1.5rem', marginBottom: '1rem' }}>Something went wrong</h1>
@@ -81,11 +75,6 @@ const MyApp = ({ Component, pageProps }) => {
     [theme]
   )
 
-  // Do not mount Clerk unless a valid publishable key is configured. This keeps
-  // authentication optional for ordinary public NotionNext blogs.
-  const clerkPublishableKey = process.env.NEXT_PUBLIC_CLERK_PUBLISHABLE_KEY
-  const enableClerk =
-    typeof clerkPublishableKey === 'string' && clerkPublishableKey.startsWith('pk_')
   const content = (
     <AppErrorBoundary>
       <GlobalContextProvider {...pageProps}>
@@ -97,15 +86,7 @@ const MyApp = ({ Component, pageProps }) => {
       </GlobalContextProvider>
     </AppErrorBoundary>
   )
-  return (
-    <>
-      {enableClerk ? (
-        <ClerkProvider localization={zhCN}>{content}</ClerkProvider>
-      ) : (
-        content
-      )}
-    </>
-  )
+  return content
 }
 
 export default MyApp
